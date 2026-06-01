@@ -318,20 +318,20 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
 <div class="bg-scene" aria-hidden="true">
   <div class="mountains mt-far">
     <svg viewBox="0 0 1440 360" preserveAspectRatio="none">
-      <path d="M0,360 L0,220 Q60,190 120,210 Q200,150 280,195 Q380,120 460,175 Q560,100 640,155 Q740,90 820,145 Q920,70 1000,135 Q1100,80 1180,130 Q1280,90 1370,145 Q1410,160 1440,180 L1440,360 Z" fill="var(--mt-far-fill)"/>
-      <path d="M0,360 L0,250 Q80,220 160,245 Q260,180 350,230 Q450,150 530,210 Q630,140 710,200 Q810,130 890,190 Q990,120 1080,185 Q1180,140 1260,190 Q1350,160 1440,200 L1440,360 Z" fill="var(--mt-far-fill2)"/>
+      <path d="M0,360 L0,220 Q60,190 120,210 Q200,150 280,195 Q380,120 460,175 Q560,100 640,155 Q740,90 820,145 Q920,70 1000,135 Q1100,80 1180,130 Q1280,90 1370,145 Q1410,160 1440,180 L1440,360 Z" style="fill:var(--mt-far-fill)"/>
+      <path d="M0,360 L0,250 Q80,220 160,245 Q260,180 350,230 Q450,150 530,210 Q630,140 710,200 Q810,130 890,190 Q990,120 1080,185 Q1180,140 1260,190 Q1350,160 1440,200 L1440,360 Z" style="fill:var(--mt-far-fill2)"/>
     </svg>
   </div>
   <div class="mountains mt-mid">
     <svg viewBox="0 0 1440 300" preserveAspectRatio="none">
-      <path d="M0,300 L0,180 Q100,130 200,170 Q320,90 420,150 Q540,70 640,130 Q760,60 860,120 Q980,50 1080,115 Q1200,70 1300,120 Q1390,150 1440,90 L1440,300 Z" fill="var(--mt-mid-fill)"/>
-      <path d="M0,300 L0,210 Q140,170 260,210 Q380,140 500,195 Q620,120 740,180 Q860,110 980,175 Q1100,120 1220,170 Q1340,140 1440,160 L1440,300 Z" fill="var(--mt-mid-fill2)"/>
+      <path d="M0,300 L0,180 Q100,130 200,170 Q320,90 420,150 Q540,70 640,130 Q760,60 860,120 Q980,50 1080,115 Q1200,70 1300,120 Q1390,150 1440,90 L1440,300 Z" style="fill:var(--mt-mid-fill)"/>
+      <path d="M0,300 L0,210 Q140,170 260,210 Q380,140 500,195 Q620,120 740,180 Q860,110 980,175 Q1100,120 1220,170 Q1340,140 1440,160 L1440,300 Z" style="fill:var(--mt-mid-fill2)"/>
     </svg>
   </div>
   <div class="mountains mt-near">
     <svg viewBox="0 0 1440 240" preserveAspectRatio="none">
-      <path d="M0,240 L0,140 Q80,100 180,145 Q300,70 420,130 Q540,50 660,115 Q780,40 900,110 Q1020,60 1140,115 Q1260,80 1380,125 Q1410,135 1440,110 L1440,240 Z" fill="var(--mt-near-fill)"/>
-      <path d="M0,240 L0,170 Q120,130 240,175 Q360,100 480,155 Q600,80 720,140 Q840,70 960,135 Q1080,90 1200,140 Q1320,110 1440,130 L1440,240 Z" fill="var(--mt-near-fill2)"/>
+      <path d="M0,240 L0,140 Q80,100 180,145 Q300,70 420,130 Q540,50 660,115 Q780,40 900,110 Q1020,60 1140,115 Q1260,80 1380,125 Q1410,135 1440,110 L1440,240 Z" style="fill:var(--mt-near-fill)"/>
+      <path d="M0,240 L0,170 Q120,130 240,175 Q360,100 480,155 Q600,80 720,140 Q840,70 960,135 Q1080,90 1200,140 Q1320,110 1440,130 L1440,240 Z" style="fill:var(--mt-near-fill2)"/>
     </svg>
   </div>
   <div class="mist"></div>
@@ -569,14 +569,19 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
     ty += (my - ty) * 0.08;
 
     // 3D tilt on title: rotateY from mouse X, rotateX from mouse Y (inverted)
-    const ry = tx * 6;  // ±6 degrees Y rotation
-    const rx = -ty * 4; // ±4 degrees X rotation
+    const ry = tx * 14;  // ±14 degrees Y rotation
+    const rx = -ty * 10; // ±10 degrees X rotation
     inner.style.transform = 'rotateX('+rx+'deg) rotateY('+ry+'deg)';
+    // Dynamic drop-shadow follows tilt direction
+    var sx = tx * 12;
+    var sy = ty * 6;
+    var blur = 10 + Math.abs(tx) * 8;
+    inner.style.filter = 'drop-shadow('+sx+'px '+sy+'px '+blur+'px rgba(0,0,0,0.4))';
 
     // Floor shadow shifts opposite to tilt
     if (shadow){
-      shadow.style.transform = 'translateX('+(-tx*30)+'px) scaleX('+(1-Math.abs(tx)*0.15)+')';
-      shadow.style.opacity = 0.55 + Math.abs(tx) * 0.2;
+      shadow.style.transform = 'translateX('+(-tx*60)+'px) scaleX('+(1-Math.abs(tx)*0.3)+')';
+      shadow.style.opacity = 0.35 + Math.abs(tx) * 0.4;
     }
 
     // Seal follows slightly
