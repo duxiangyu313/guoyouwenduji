@@ -152,19 +152,32 @@ nav .inner{
 .nav-links .btn-bili:hover{background:rgba(233,69,96,0.12);color:#ff5a72;border-color:var(--red);text-shadow:none;box-shadow:0 0 20px rgba(233,69,96,0.15)}
 .nav-links .btn-bili::after{display:none}
 
-/* ----- Hero ----- */
+/* ----- Hero + 3D Title ----- */
 .hero{position:relative;z-index:2;padding:200px 0 140px;text-align:center}
-.hero .seal{display:inline-block;padding:6px 20px;border:1px solid rgba(245,166,35,0.25);color:var(--gold);font-size:11px;letter-spacing:8px;font-family:var(--font-heading);margin-bottom:36px;position:relative}
+.hero .seal{display:inline-block;padding:6px 20px;border:1px solid rgba(245,166,35,0.25);color:var(--gold);font-size:11px;letter-spacing:8px;font-family:var(--font-heading);margin-bottom:36px;position:relative;transition:transform .1s ease-out;will-change:transform}
 .hero .seal::before,.hero .seal::after{content:'';position:absolute;top:50%;width:24px;height:1px;background:rgba(245,166,35,0.2)}
 .hero .seal::before{right:calc(100% + 14px)}
 .hero .seal::after{left:calc(100% + 14px)}
-.hero h1{font-size:clamp(48px,8vw,80px);font-weight:900;color:var(--text-bright);letter-spacing:14px;font-family:var(--font-heading);line-height:1.2;position:relative}
+/* 3D title stage */
+.hero-3d{perspective:900px;display:inline-block;margin:0 auto}
+.hero-3d-inner{transition:transform .15s ease-out;will-change:transform}
+.hero h1{font-size:clamp(48px,8vw,80px);font-weight:900;color:var(--text-bright);letter-spacing:14px;font-family:var(--font-heading);line-height:1.2;position:relative;margin:0}
+/* 3D extrusion shadow layers */
+.hero h1 .char{display:inline-block;position:relative}
 .hero h1 .accent{color:var(--gold);text-shadow:0 0 60px rgba(245,166,35,0.25),0 2px 4px rgba(0,0,0,0.6);position:relative}
 [data-theme="light"] .hero h1 .accent{text-shadow:0 0 30px rgba(196,136,29,0.2),0 1px 2px rgba(0,0,0,0.15)}
 .hero h1 .accent::after{content:'';position:absolute;bottom:6px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,166,35,0.35),transparent)}
-.hero .tagline{font-size:17px;color:var(--text-dim);margin-top:22px;letter-spacing:8px;font-weight:300}
+/* Floor projection shadow */
+.hero-shadow{
+  margin:8px auto 0;height:14px;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(0,0,0,0.35) 0%,transparent 70%);
+  filter:blur(6px);transition:all .2s ease-out;will-change:transform,opacity;
+  max-width:500px;width:60%;
+}
+[data-theme="light"] .hero-shadow{background:radial-gradient(ellipse at center,rgba(0,0,0,0.12) 0%,transparent 70%)}
+.hero .tagline{font-size:17px;color:var(--text-dim);margin-top:22px;letter-spacing:8px;font-weight:300;transition:transform .12s ease-out;will-change:transform}
 .hero .stats{display:flex;justify-content:center;gap:64px;margin-top:56px;flex-wrap:wrap}
-.hero .stat{text-align:center;position:relative}
+.hero .stat{text-align:center;position:relative;transition:transform .1s ease-out;will-change:transform}
 .hero .stat:not(:last-child)::after{content:'';position:absolute;right:-32px;top:10%;height:80%;width:1px;background:linear-gradient(transparent,rgba(128,128,128,0.15),transparent)}
 .hero .stat-num{font-size:44px;font-weight:900;color:var(--gold);font-family:var(--font-heading);line-height:1}
 .hero .stat-label{font-size:11px;color:var(--text-dim);margin-top:10px;letter-spacing:5px;text-transform:uppercase}
@@ -246,9 +259,24 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
 .temp-gauge .bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:60%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;animation:tempRise 4s ease-in-out infinite alternate}
 @keyframes tempRise{0%{width:40%}100%{width:85%}}
 
-/* Scroll Reveal */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease-out,transform .7s ease-out}
-.reveal.visible{opacity:1;transform:translateY(0)}
+/* Scroll Reveal — enhanced with directions */
+.reveal{opacity:0;transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+.reveal-up{transform:translateY(48px)}
+.reveal-left{transform:translateX(-40px)}
+.reveal-right{transform:translateX(40px)}
+.reveal-scale{transform:scale(0.92)}
+.reveal.visible{opacity:1;transform:translate(0) scale(1)}
+/* Stagger children */
+.reveal-stagger>*{opacity:0;transform:translateY(36px);transition:opacity .5s cubic-bezier(.22,.61,.36,1),transform .5s cubic-bezier(.22,.61,.36,1)}
+.reveal-stagger.visible>*:nth-child(1){transition-delay:0s}
+.reveal-stagger.visible>*:nth-child(2){transition-delay:.08s}
+.reveal-stagger.visible>*:nth-child(3){transition-delay:.16s}
+.reveal-stagger.visible>*:nth-child(4){transition-delay:.24s}
+.reveal-stagger.visible>*:nth-child(5){transition-delay:.32s}
+.reveal-stagger.visible>*{opacity:1;transform:translateY(0)}
+
+/* Mountains — scroll parallax (overrides CSS drift for scroll) */
+.mountains{transition:transform .05s linear}
 
 /* ----- Responsive ----- */
 @media(max-width:768px){
@@ -336,7 +364,12 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
 <!-- ===== Hero ===== -->
 <header class="hero">
   <div class="seal" data-i18n="hero.seal">国 产 3A · 观 察 者</div>
-  <h1>国游<span class="accent">温度计</span></h1>
+  <div class="hero-3d">
+    <div class="hero-3d-inner">
+      <h1>国游<span class="accent">温度计</span></h1>
+    </div>
+  </div>
+  <div class="hero-shadow"></div>
   <p class="tagline" data-i18n="hero.tagline">有温度的国产游戏观察者</p>
   <div class="stats">
     <div class="stat"><div class="stat-num">5</div><div class="stat-label" data-i18n="hero.episodes">期视频</div></div>
@@ -371,9 +404,9 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
       <h2 data-i18n-html="episodes.title">往期<span>视频</span></h2>
       <div class="brush-divider"></div>
     </div>
-    <div class="episodes-grid">
+    <div class="episodes-grid reveal-stagger">
 
-      <a href="articles/ep5-湮灭之潮.html" class="ep-card reveal">
+      <a href="articles/ep5-湮灭之潮.html" class="ep-card">
         <div class="ep-visual">⚔️</div>
         <div class="ep-body">
           <span class="ep-badge" data-i18n="episode.ep5">第5期</span>
@@ -383,7 +416,7 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
         </div>
       </a>
 
-      <a href="articles/ep4-归唐.html" class="ep-card reveal">
+      <a href="articles/ep4-归唐.html" class="ep-card">
         <div class="ep-visual">🏜️</div>
         <div class="ep-body">
           <span class="ep-badge" data-i18n="episode.ep4">第4期</span>
@@ -393,7 +426,7 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
         </div>
       </a>
 
-      <a href="https://www.bilibili.com/video/BV1bnVH6LEtX" target="_blank" class="ep-card reveal">
+      <a href="https://www.bilibili.com/video/BV1bnVH6LEtX" target="_blank" class="ep-card">
         <div class="ep-visual">🃏</div>
         <div class="ep-body">
           <span class="ep-badge" data-i18n="episode.ep3">第3期</span>
@@ -403,7 +436,7 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
         </div>
       </a>
 
-      <a href="https://www.bilibili.com/video/BV1gXG16mE9E" target="_blank" class="ep-card reveal">
+      <a href="https://www.bilibili.com/video/BV1gXG16mE9E" target="_blank" class="ep-card">
         <div class="ep-visual">🗡️</div>
         <div class="ep-body">
           <span class="ep-badge" data-i18n="episode.ep2">第2期</span>
@@ -413,7 +446,7 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
         </div>
       </a>
 
-      <a href="https://www.bilibili.com/video/BV1qTG76yEUH" target="_blank" class="ep-card reveal">
+      <a href="https://www.bilibili.com/video/BV1qTG76yEUH" target="_blank" class="ep-card">
         <div class="ep-visual">🌏</div>
         <div class="ep-body">
           <span class="ep-badge" data-i18n="episode.ep1">第1期</span>
@@ -435,9 +468,9 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
       <h2 data-i18n-html="tracker.title">国产3A <span>项目追踪</span></h2>
       <div class="brush-divider"></div>
     </div>
-    <div class="tracker-grid">
+    <div class="tracker-grid reveal-stagger">
 
-      <div class="track-card reveal">
+      <div class="track-card">
         <div class="track-icon">🏜️</div>
         <div class="track-name">归 唐</div>
         <div class="track-dev">网易雷火 · 临安24工作室</div>
@@ -445,7 +478,7 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
         <span class="track-status status-live" data-i18n="tracker.guitang.status">6月6日 SGF亮相</span>
       </div>
 
-      <div class="track-card reveal">
+      <div class="track-card">
         <div class="track-icon">⚔️</div>
         <div class="track-name">湮灭之潮</div>
         <div class="track-dev">腾讯蛇夫座 · 日蚀边缘</div>
@@ -453,7 +486,7 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
         <span class="track-status status-warm" data-i18n="tracker.yanmie.status">夏季试玩</span>
       </div>
 
-      <div class="track-card reveal">
+      <div class="track-card">
         <div class="track-icon">🗡️</div>
         <div class="track-name">影之刃零</div>
         <div class="track-dev">灵游坊</div>
@@ -461,7 +494,7 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
         <span class="track-status status-live" data-i18n="tracker.yingzhiren.status">9月9日发售</span>
       </div>
 
-      <div class="track-card reveal">
+      <div class="track-card">
         <div class="track-icon">🐵</div>
         <div class="track-name">黑神话悟空 DLC</div>
         <div class="track-dev">游戏科学</div>
@@ -503,6 +536,104 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
 
 <!-- ===== Scripts ===== -->
 <script>
+/* ═══════════════════════════════════════════
+   3D Title — Mouse Parallax
+   ═══════════════════════════════════════════ */
+(function(){
+  const inner = document.querySelector('.hero-3d-inner');
+  const shadow = document.querySelector('.hero-shadow');
+  const seal = document.querySelector('.hero .seal');
+  const tagline = document.querySelector('.hero .tagline');
+  const stats = document.querySelectorAll('.hero .stat');
+  if (!inner) return;
+
+  let mx = 0, my = 0, tx = 0, ty = 0;
+
+  document.addEventListener('mousemove', function(e){
+    // Normalize to -1..1 relative to viewport center
+    mx = (e.clientX / window.innerWidth - 0.5) * 2;  // -1(left) .. 1(right)
+    my = (e.clientY / window.innerHeight - 0.5) * 2; // -1(top) .. 1(bottom)
+  });
+
+  // Also track touch for mobile
+  document.addEventListener('touchmove', function(e){
+    if (e.touches.length){
+      mx = (e.touches[0].clientX / window.innerWidth - 0.5) * 2;
+      my = (e.touches[0].clientY / window.innerHeight - 0.5) * 2;
+    }
+  }, {passive: true});
+
+  // Smooth follow using requestAnimationFrame
+  function smoothFollow(){
+    tx += (mx - tx) * 0.08;
+    ty += (my - ty) * 0.08;
+
+    // 3D tilt on title: rotateY from mouse X, rotateX from mouse Y (inverted)
+    const ry = tx * 6;  // ±6 degrees Y rotation
+    const rx = -ty * 4; // ±4 degrees X rotation
+    inner.style.transform = 'rotateX('+rx+'deg) rotateY('+ry+'deg)';
+
+    // Floor shadow shifts opposite to tilt
+    if (shadow){
+      shadow.style.transform = 'translateX('+(-tx*30)+'px) scaleX('+(1-Math.abs(tx)*0.15)+')';
+      shadow.style.opacity = 0.55 + Math.abs(tx) * 0.2;
+    }
+
+    // Seal follows slightly
+    if (seal) seal.style.transform = 'translateX('+(tx*12)+'px) translateY('+(ty*6)+'px)';
+
+    // Tagline follows subtly
+    if (tagline) tagline.style.transform = 'translateX('+(tx*6)+'px) translateY('+(ty*3)+'px)';
+
+    // Stats follow
+    stats.forEach(function(s, i){
+      var factor = 0.5 + i * 0.3;
+      s.style.transform = 'translateY('+(ty*8*factor)+'px)';
+    });
+
+    requestAnimationFrame(smoothFollow);
+  }
+  smoothFollow();
+})();
+
+/* ═══════════════════════════════════════════
+   Scroll-driven Parallax
+   ═══════════════════════════════════════════ */
+(function(){
+  var ticking = false;
+  var mountains = document.querySelectorAll('.mountains');
+  var heroInner = document.querySelector('.hero-3d-inner');
+  var heroShadow = document.querySelector('.hero-shadow');
+  var heroTagline = document.querySelector('.hero .tagline');
+  var heroSeal = document.querySelector('.hero .seal');
+
+  window.addEventListener('scroll', function(){
+    if (!ticking){
+      requestAnimationFrame(function(){
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        var vh = window.innerHeight;
+
+        // Mountains parallax (different speeds per layer)
+        if (mountains.length >= 3){
+          mountains[0].style.transform = 'translateY('+(scrollY * 0.04)+'px)'; // far: slowest
+          mountains[1].style.transform = 'translateY('+(scrollY * 0.07)+'px)'; // mid
+          mountains[2].style.transform = 'translateY('+(scrollY * 0.11)+'px)'; // near: fastest
+        }
+
+        // Hero elements fade & shift on scroll
+        var heroFade = Math.max(0, 1 - scrollY / (vh * 0.7));
+        if (heroInner)  heroInner.style.opacity = heroFade;
+        if (heroShadow) heroShadow.style.opacity = heroFade * 0.55;
+        if (heroTagline) heroTagline.style.opacity = heroFade;
+        if (heroSeal)   heroSeal.style.opacity = heroFade;
+
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive: true});
+})();
+
 /* ═══════════════════════════════════════════
    i18n Dictionary
    ═══════════════════════════════════════════ */
