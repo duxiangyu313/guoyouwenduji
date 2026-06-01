@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark" data-lang="zh">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -7,292 +7,419 @@
 <meta name="description" content="国游温度计——专业但不冷漠、有趣但不低俗的国产游戏观察者。追踪归唐、湮灭之潮、影之刃零、黑神话悟空等国产3A项目最新动态。">
 <meta name="keywords" content="国游温度计,国产3A,归唐,湮灭之潮,影之刃零,黑神话悟空,国产游戏,B站UP主">
 <style>
-/* ===== CSS Variables ===== */
+/* ============================================================
+   国游温度计 · 水墨为骨 · 暗黑为魂
+   INK WASH × DARK JIANGHU
+   with Theme Switcher (Dark ⇄ Rice Paper) + i18n (中 ⇄ EN)
+   ============================================================ */
+
+/* ----- CSS Variables: Dark Theme (default) ----- */
 :root{
-  --ink:#0b0a10;--deep:#13111c;--surface:#1a1726;--raised:#211e30;
-  --gold:#F5A623;--red:#E94560;--ember:#c0392b;--warm:#e8724a;
+  --void:#050408;--ink:#0a0810;--deep:#100d1a;--surface:#181424;--raised:#1f1a30;
+  --gold:#F5A623;--gold-dim:#c4881d;--red:#E94560;--red-dim:#b8354c;
   --text:#c4bfb6;--text-dim:#78726a;--text-bright:#e8e4dc;
-  --border:rgba(255,255,255,0.05);--border-glow:rgba(245,166,35,0.12);
-  --radius:6px;--radius-lg:10px;
+  --border:rgba(255,255,255,0.04);--border-active:rgba(245,166,35,0.18);
+  --nav-bg:rgba(5,4,8,0.82);--card-bg:linear-gradient(180deg,rgba(24,20,36,0.7),rgba(16,13,26,0.8));
+  --card-bg2:linear-gradient(180deg,rgba(24,20,36,0.6),rgba(14,12,24,0.7));
+  --section-stripe:linear-gradient(180deg,transparent,rgba(10,8,16,0.6),transparent);
+  --shadow-card:0 20px 50px rgba(0,0,0,0.4);
+  --shadow-glow:0 0 40px rgba(245,166,35,0.06);
+  --mt-far-fill:rgba(55,50,75,0.18);--mt-far-fill2:rgba(40,36,58,0.12);
+  --mt-mid-fill:rgba(35,30,52,0.22);--mt-mid-fill2:rgba(25,22,40,0.15);
+  --mt-near-fill:rgba(22,18,38,0.28);--mt-near-fill2:rgba(16,13,30,0.18);
+  --mist-bg:radial-gradient(ellipse at 30% 100%,rgba(180,170,200,0.06) 0%,transparent 60%),
+            radial-gradient(ellipse at 70% 100%,rgba(160,150,180,0.04) 0%,transparent 55%),
+            radial-gradient(ellipse at 50% 90%,rgba(200,190,210,0.03) 0%,transparent 50%);
+  --sky-bg:radial-gradient(ellipse at 15% 0%,rgba(30,20,50,0.35) 0%,transparent 55%),
+           radial-gradient(ellipse at 75% 0%,rgba(20,15,40,0.25) 0%,transparent 50%),
+           radial-gradient(ellipse at 50% 100%,rgba(10,8,25,0.4) 0%,transparent 45%),
+           linear-gradient(180deg,#08060f 0%,#0c0a16 30%,#0e0b1a 60%,#0a0812 100%);
+  --ink-gold:rgba(245,166,35,0.025);--ink-red:rgba(233,69,96,0.02);
+  --radius:8px;--radius-lg:12px;
+  --font-heading:'STKaiti','KaiTi','楷体','Noto Serif SC',serif;
+  --font-body:'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
 }
-*{margin:0;padding:0;box-sizing:border-box}
+
+/* ----- CSS Variables: Light Theme (Rice Paper Scroll) ----- */
+[data-theme="light"]{
+  --void:#f5efe4;--ink:#ede4d5;--deep:#e6dcc8;--surface:#faf6ef;--raised:#f0e8d8;
+  --text:#3d3830;--text-dim:#8a8070;--text-bright:#1a1814;
+  --border:rgba(0,0,0,0.06);--border-active:rgba(196,136,29,0.25);
+  --nav-bg:rgba(245,239,228,0.88);
+  --card-bg:linear-gradient(180deg,rgba(250,246,239,0.9),rgba(240,232,216,0.85));
+  --card-bg2:linear-gradient(180deg,rgba(250,246,239,0.85),rgba(235,225,210,0.8));
+  --section-stripe:linear-gradient(180deg,transparent,rgba(0,0,0,0.02),transparent);
+  --shadow-card:0 8px 30px rgba(0,0,0,0.08);
+  --shadow-glow:0 0 20px rgba(196,136,29,0.1);
+  --mt-far-fill:rgba(180,170,155,0.15);--mt-far-fill2:rgba(160,150,135,0.1);
+  --mt-mid-fill:rgba(160,148,130,0.18);--mt-mid-fill2:rgba(140,128,110,0.12);
+  --mt-near-fill:rgba(140,125,105,0.22);--mt-near-fill2:rgba(120,108,90,0.15);
+  --mist-bg:radial-gradient(ellipse at 30% 100%,rgba(200,190,175,0.08) 0%,transparent 60%),
+            radial-gradient(ellipse at 70% 100%,rgba(190,180,165,0.06) 0%,transparent 55%);
+  --sky-bg:radial-gradient(ellipse at 15% 0%,rgba(220,210,195,0.25) 0%,transparent 55%),
+           radial-gradient(ellipse at 75% 0%,rgba(210,200,185,0.2) 0%,transparent 50%),
+           radial-gradient(ellipse at 50% 100%,rgba(200,185,165,0.2) 0%,transparent 45%),
+           linear-gradient(180deg,#f5efe4 0%,#ede4d5 30%,#e8dcc8 60%,#efe8da 100%);
+  --ink-gold:rgba(196,136,29,0.04);--ink-red:rgba(180,53,76,0.03);
+}
+
+/* ----- Reset & Base ----- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  background:var(--ink);color:var(--text);
-  font-family:'PingFang SC','Noto Sans SC','Microsoft YaHei',sans-serif;
-  line-height:1.7;-webkit-font-smoothing:antialiased;
-  background-image:
-    radial-gradient(ellipse at 20% 0%,rgba(233,69,96,0.04) 0%,transparent 50%),
-    radial-gradient(ellipse at 80% 20%,rgba(245,166,35,0.03) 0%,transparent 50%),
-    radial-gradient(ellipse at 50% 100%,rgba(245,166,35,0.02) 0%,transparent 40%);
-  background-attachment:fixed;
+  background:var(--void);color:var(--text);
+  font-family:var(--font-body);line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;min-height:100vh;
+  transition:background .5s,color .5s;
 }
-body::before{
-  content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  opacity:0.5;
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  transition:opacity .5s;
 }
+[data-theme="light"] body::after{opacity:0.04}
 
-/* ===== Typography ===== */
-a{color:var(--gold);text-decoration:none;transition:color .25s}
-a:hover{color:#fcc744}
-.container{max-width:1120px;margin:0 auto;padding:0 28px}
+/* ----- Background Scene ----- */
+.bg-scene{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bg-scene::before{
+  content:'';position:absolute;inset:0;
+  background:var(--sky-bg);
+  transition:background .5s;
+}
+.mountains{position:absolute;bottom:0;left:-5%;width:110%;will-change:transform;transition:filter .5s}
+.mountains svg{width:100%;height:auto;display:block}
+.mt-far{bottom:0;z-index:1;animation:mtDriftFar 48s ease-in-out infinite alternate}
+.mt-mid{bottom:0;z-index:2;animation:mtDriftMid 36s ease-in-out infinite alternate}
+.mt-near{bottom:0;z-index:3;animation:mtDriftNear 28s ease-in-out infinite alternate}
+@keyframes mtDriftFar{0%{transform:translateX(-8px)}100%{transform:translateX(12px)}}
+@keyframes mtDriftMid{0%{transform:translateX(6px)}100%{transform:translateX(-10px)}}
+@keyframes mtDriftNear{0%{transform:translateX(-4px)}100%{transform:translateX(8px)}}
+.mist{
+  position:absolute;bottom:0;left:-20%;width:140%;height:120px;z-index:4;
+  background:var(--mist-bg);
+  animation:mistRoll 22s ease-in-out infinite alternate;
+  filter:blur(20px);transition:background .5s;
+}
+@keyframes mistRoll{0%{transform:translateX(-20px);opacity:0.6}100%{transform:translateX(20px);opacity:1}}
+#fireflies{position:fixed;inset:0;pointer-events:none;z-index:1}
+.ink-accent{position:fixed;pointer-events:none;z-index:0;border-radius:50%;filter:blur(60px);transition:background .5s}
+.ink-accent--gold{bottom:15%;right:8%;width:280px;height:140px;background:var(--ink-gold);animation:inkPulse 6s ease-in-out infinite}
+.ink-accent--red{top:20%;left:5%;width:200px;height:100px;background:var(--ink-red);animation:inkPulse 8s ease-in-out 2s infinite}
+@keyframes inkPulse{0%,100%{opacity:0.4;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
 
-/* ===== Nav ===== */
+/* ----- Typography ----- */
+a{color:var(--gold);text-decoration:none;transition:color .3s,text-shadow .3s}
+a:hover{color:#fcc744;text-shadow:0 0 18px rgba(245,166,35,0.15)}
+.container{max-width:1120px;margin:0 auto;padding:0 32px}
+
+/* ----- Toggle Buttons ----- */
+.toggles{display:flex;align-items:center;gap:8px;margin-left:20px}
+.toggle-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:32px;border-radius:16px;border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.03);cursor:pointer;
+  font-size:13px;color:var(--text-dim);letter-spacing:1px;
+  transition:all .3s;font-family:var(--font-body);
+  backdrop-filter:blur(4px);
+}
+[data-theme="light"] .toggle-btn{border-color:rgba(0,0,0,0.1);background:rgba(0,0,0,0.03)}
+.toggle-btn:hover{border-color:var(--gold);color:var(--gold)}
+.toggle-btn.active{background:var(--red);color:#fff;border-color:var(--red)}
+.toggle-btn.theme-btn{font-size:16px;width:36px}
+.toggle-btn.lang-btn{width:44px;font-size:11px;font-weight:700;letter-spacing:2px}
+
+/* ----- Nav ----- */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(11,10,16,0.85);backdrop-filter:blur(24px) saturate(120%);
+  background:var(--nav-bg);backdrop-filter:blur(28px) saturate(130%);
   border-bottom:1px solid var(--border);
-  transition:background .3s;
+  transition:background .5s,border-color .5s;
 }
 nav .inner{
-  max-width:1160px;margin:0 auto;padding:0 28px;
-  display:flex;align-items:center;justify-content:space-between;height:68px;
+  max-width:1160px;margin:0 auto;padding:0 32px;
+  display:flex;align-items:center;justify-content:space-between;height:70px;
 }
-.logo{font-size:21px;font-weight:700;color:var(--text-bright);letter-spacing:3px}
-.logo .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:8px;animation:thermoPulse 2s ease-in-out infinite}
-@keyframes thermoPulse{0%,100%{background:var(--red)}50%{background:var(--gold);box-shadow:0 0 8px var(--gold)}}
-.nav-links{display:flex;gap:36px;align-items:center}
-.nav-links a{color:var(--text-dim);font-size:14px;letter-spacing:2px;transition:color .25s}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:700;color:var(--text-bright);letter-spacing:4px;font-family:var(--font-heading)}
+.logo .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);animation:thermoBreathe 2.2s ease-in-out infinite;box-shadow:0 0 6px rgba(233,69,96,0.5)}
+@keyframes thermoBreathe{0%,100%{background:var(--red);box-shadow:0 0 6px rgba(233,69,96,0.5)}50%{background:var(--gold);box-shadow:0 0 14px rgba(245,166,35,0.7)}}
+.nav-links{display:flex;gap:34px;align-items:center}
+.nav-links a{color:var(--text-dim);font-size:13px;letter-spacing:3px;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:0;height:1px;background:var(--gold);transition:width .3s}
+.nav-links a:hover::after{width:100%}
 .nav-links a:hover{color:var(--text-bright)}
-.nav-links .btn{
-  display:inline-block;padding:7px 20px;background:transparent;color:var(--red);
-  border:1px solid var(--red);border-radius:20px;font-size:13px;letter-spacing:2px;
-  transition:all .25s;
-}
-.nav-links .btn:hover{background:var(--red);color:#fff}
+.nav-links .btn-bili{display:inline-flex;align-items:center;gap:6px;padding:7px 18px;background:transparent;color:var(--red);border:1px solid rgba(233,69,96,0.4);border-radius:20px;font-size:12px;letter-spacing:2px;transition:all .3s}
+.nav-links .btn-bili:hover{background:rgba(233,69,96,0.12);color:#ff5a72;border-color:var(--red);text-shadow:none;box-shadow:0 0 20px rgba(233,69,96,0.15)}
+.nav-links .btn-bili::after{display:none}
 
-/* ===== Hero ===== */
-.hero{
-  padding:180px 0 100px;text-align:center;position:relative;overflow:hidden;
-}
-.hero::after{
-  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
-  width:1px;height:60px;background:linear-gradient(transparent,var(--red),transparent);
-  opacity:0.3;
-}
-.hero .thermo-icon{font-size:72px;margin-bottom:28px;display:inline-block;animation:float 3s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-.hero h1{
-  font-size:64px;font-weight:800;color:var(--text-bright);letter-spacing:10px;
-  line-height:1.15;
-}
-.hero h1 .accent{color:var(--gold);position:relative}
-.hero h1 .accent::after{
-  content:'';position:absolute;bottom:4px;left:0;right:0;height:3px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.3;
-}
-.hero .tagline{font-size:18px;color:var(--text-dim);margin-top:20px;letter-spacing:6px}
-.hero .stats{display:flex;justify-content:center;gap:56px;margin-top:48px}
-.hero .stat{text-align:center}
-.hero .stat-num{font-size:42px;font-weight:800;color:var(--gold);line-height:1}
-.hero .stat-label{font-size:12px;color:var(--text-dim);margin-top:8px;letter-spacing:4px;text-transform:uppercase}
+/* ----- Hero ----- */
+.hero{position:relative;z-index:2;padding:200px 0 140px;text-align:center}
+.hero .seal{display:inline-block;padding:6px 20px;border:1px solid rgba(245,166,35,0.25);color:var(--gold);font-size:11px;letter-spacing:8px;font-family:var(--font-heading);margin-bottom:36px;position:relative}
+.hero .seal::before,.hero .seal::after{content:'';position:absolute;top:50%;width:24px;height:1px;background:rgba(245,166,35,0.2)}
+.hero .seal::before{right:calc(100% + 14px)}
+.hero .seal::after{left:calc(100% + 14px)}
+.hero h1{font-size:clamp(48px,8vw,80px);font-weight:900;color:var(--text-bright);letter-spacing:14px;font-family:var(--font-heading);line-height:1.2;position:relative}
+.hero h1 .accent{color:var(--gold);text-shadow:0 0 60px rgba(245,166,35,0.25),0 2px 4px rgba(0,0,0,0.6);position:relative}
+[data-theme="light"] .hero h1 .accent{text-shadow:0 0 30px rgba(196,136,29,0.2),0 1px 2px rgba(0,0,0,0.15)}
+.hero h1 .accent::after{content:'';position:absolute;bottom:6px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,rgba(245,166,35,0.35),transparent)}
+.hero .tagline{font-size:17px;color:var(--text-dim);margin-top:22px;letter-spacing:8px;font-weight:300}
+.hero .stats{display:flex;justify-content:center;gap:64px;margin-top:56px;flex-wrap:wrap}
+.hero .stat{text-align:center;position:relative}
+.hero .stat:not(:last-child)::after{content:'';position:absolute;right:-32px;top:10%;height:80%;width:1px;background:linear-gradient(transparent,rgba(128,128,128,0.15),transparent)}
+.hero .stat-num{font-size:44px;font-weight:900;color:var(--gold);font-family:var(--font-heading);line-height:1}
+.hero .stat-label{font-size:11px;color:var(--text-dim);margin-top:10px;letter-spacing:5px;text-transform:uppercase}
 
-/* ===== Section Titles ===== */
-.section-head{
-  text-align:center;margin-bottom:56px;position:relative;
-}
-.section-head .label{
-  font-size:11px;color:var(--red);letter-spacing:6px;text-transform:uppercase;margin-bottom:12px;
-}
-.section-head h2{font-size:32px;font-weight:700;color:var(--text-bright);letter-spacing:4px}
+/* ----- Section Headers ----- */
+.section-head{text-align:center;margin-bottom:64px;position:relative;z-index:2}
+.section-head .label{font-size:10px;color:var(--red);letter-spacing:8px;text-transform:uppercase;margin-bottom:14px}
+.section-head h2{font-size:clamp(28px,4vw,38px);font-weight:700;color:var(--text-bright);letter-spacing:6px;font-family:var(--font-heading)}
 .section-head h2 span{color:var(--gold)}
-.section-head .decorator{
-  display:inline-block;width:40px;height:2px;background:var(--gold);margin-top:16px;opacity:0.4;
-}
+.brush-divider{display:block;width:80px;height:3px;margin:18px auto 0;position:relative;background:linear-gradient(90deg,transparent 0%,rgba(245,166,35,0.15) 15%,rgba(245,166,35,0.4) 50%,rgba(245,166,35,0.15) 85%,transparent 100%)}
+.brush-divider::after{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);width:12px;height:5px;border-radius:2px;background:rgba(233,69,96,0.25)}
 
-/* ===== Latest Video ===== */
-.latest{padding:80px 0;background:var(--deep);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.latest .video-wrapper{max-width:920px;margin:0 auto;position:relative}
-.latest .video-frame{
-  position:relative;border-radius:var(--radius-lg);overflow:hidden;
-  box-shadow:0 0 60px rgba(233,69,96,0.06),0 0 120px rgba(245,166,35,0.03);
-}
-.latest .video-frame::before{
-  content:'';display:block;padding-top:56.25%;
-}
-.latest .video-frame iframe{
-  position:absolute;inset:0;width:100%;height:100%;border:none;
-}
-.latest .video-label{text-align:center;margin-top:20px;font-size:16px;color:var(--text);letter-spacing:2px}
+/* ----- Sections ----- */
+section{position:relative;z-index:2}
+.latest{padding:90px 0;background:var(--section-stripe);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .5s}
+.latest .video-wrapper{max-width:900px;margin:0 auto;position:relative}
+.latest .video-frame{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:0 0 80px rgba(233,69,96,0.05),0 0 160px rgba(245,166,35,0.03),var(--shadow-card);border:1px solid var(--border)}
+.latest .video-frame::before{content:'';display:block;padding-top:56.25%}
+.latest .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.latest .video-label{text-align:center;margin-top:22px;font-size:15px;color:var(--text);letter-spacing:3px}
 
-/* ===== Episodes Grid ===== */
-.episodes{padding:100px 0}
-.episodes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:20px}
-.ep-card{
-  position:relative;background:var(--surface);border-radius:var(--radius-lg);
-  overflow:hidden;border:1px solid var(--border);transition:all .35s cubic-bezier(.25,.8,.25,1.2);
-  cursor:pointer;
-}
-.ep-card:hover{transform:translateY(-4px);border-color:var(--border-glow);box-shadow:0 16px 40px rgba(0,0,0,0.3),0 0 30px rgba(245,166,35,0.04)}
-.ep-card .ep-visual{
-  height:140px;position:relative;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;font-size:56px;
-  background:var(--raised);
-}
-.ep-card .ep-visual::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;height:40px;
-  background:linear-gradient(transparent,var(--surface));
-}
-.ep-card .ep-badge{
-  position:absolute;top:14px;left:14px;z-index:2;
-  background:var(--red);color:#fff;font-size:11px;padding:3px 10px;border-radius:3px;letter-spacing:2px;font-weight:600;
-}
-.ep-card .ep-body{padding:22px 24px 28px}
-.ep-card .ep-title{font-size:17px;font-weight:600;color:var(--text-bright);letter-spacing:1px;margin-bottom:6px}
-.ep-card .ep-meta{font-size:12px;color:var(--text-dim);letter-spacing:1px}
-.ep-card .ep-link{display:inline-block;margin-top:12px;font-size:13px;color:var(--gold);letter-spacing:2px;font-weight:500}
-.ep-card:nth-child(1) .ep-visual{background:linear-gradient(135deg,#0d1228,#1a1420)}
-.ep-card:nth-child(2) .ep-visual{background:linear-gradient(135deg,#1a1420,#2a1a18)}
-.ep-card:nth-child(3) .ep-visual{background:linear-gradient(135deg,#14101e,#1a1420)}
-.ep-card:nth-child(4) .ep-visual{background:linear-gradient(135deg,#1a1420,#0a0814)}
-.ep-card:nth-child(5) .ep-visual{background:linear-gradient(135deg,#0a0814,#1a1228)}
+/* Episodes Grid */
+.episodes{padding:110px 0}
+.episodes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px}
+.ep-card{position:relative;z-index:2;display:block;background:var(--card-bg);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);transition:all .4s cubic-bezier(.2,.8,.2,1.2);cursor:pointer;backdrop-filter:blur(4px)}
+.ep-card:hover{transform:translateY(-5px);border-color:var(--border-active);box-shadow:var(--shadow-card),var(--shadow-glow),0 0 0 1px rgba(245,166,35,0.08)}
+.ep-card .ep-visual{height:130px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:52px}
+.ep-card .ep-visual::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50px;background:linear-gradient(transparent,var(--surface))}
+[data-theme="light"] .ep-card .ep-visual::after{background:linear-gradient(transparent,#ede4d5)}
+.ep-card:nth-child(1) .ep-visual{background:linear-gradient(135deg,#141022,#1f1830)}
+.ep-card:nth-child(2) .ep-visual{background:linear-gradient(135deg,#1a1420,#261a22)}
+.ep-card:nth-child(3) .ep-visual{background:linear-gradient(135deg,#12101e,#1a1628)}
+.ep-card:nth-child(4) .ep-visual{background:linear-gradient(135deg,#1a1420,#0f0c1a)}
+.ep-card:nth-child(5) .ep-visual{background:linear-gradient(135deg,#0c0a16,#18122a)}
+[data-theme="light"] .ep-card:nth-child(1) .ep-visual{background:linear-gradient(135deg,#e0d8c8,#d8d0c0)}
+[data-theme="light"] .ep-card:nth-child(2) .ep-visual{background:linear-gradient(135deg,#ddd5c5,#d5cdbd)}
+[data-theme="light"] .ep-card:nth-child(3) .ep-visual{background:linear-gradient(135deg,#e2dac8,#dad2c2)}
+[data-theme="light"] .ep-card:nth-child(4) .ep-visual{background:linear-gradient(135deg,#ded6c6,#d4ccbc)}
+[data-theme="light"] .ep-card:nth-child(5) .ep-visual{background:linear-gradient(135deg,#e0d8c8,#d6cebe)}
+.ep-card .ep-badge{position:absolute;top:14px;left:14px;z-index:3;background:rgba(233,69,96,0.85);color:#fff;font-size:10px;padding:4px 12px;border-radius:3px;letter-spacing:3px;font-weight:600;font-family:var(--font-heading)}
+.ep-card .ep-body{padding:20px 26px 28px}
+.ep-card .ep-title{font-size:17px;font-weight:600;color:var(--text-bright);letter-spacing:2px;margin-bottom:6px}
+.ep-card .ep-meta{font-size:11px;color:var(--text-dim);letter-spacing:2px}
+.ep-card .ep-link{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;color:var(--gold);letter-spacing:3px;font-weight:500;transition:all .3s}
+.ep-card:hover .ep-link{color:#fcc744;gap:10px}
 
-/* ===== Tracker ===== */
-.tracker{padding:100px 0;background:var(--deep);border-top:1px solid var(--border)}
-.tracker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
-.track-card{
-  background:var(--surface);border-radius:var(--radius-lg);padding:28px;
-  border:1px solid var(--border);position:relative;overflow:hidden;
-  transition:all .3s;
-}
-.track-card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;
-  transition:opacity .3s;
-}
-.track-card:hover{transform:translateY(-2px);border-color:var(--border-glow)}
-.track-card:hover::before{opacity:0.6}
-.track-card .track-icon{font-size:28px;margin-bottom:12px}
-.track-card .track-name{font-size:20px;font-weight:700;color:var(--text-bright);letter-spacing:3px}
-.track-card .track-dev{font-size:12px;color:var(--text-dim);margin-top:4px;letter-spacing:1px}
-.track-card .track-info{font-size:13px;color:var(--text);margin-top:14px;line-height:1.65}
-.track-card .track-status{display:inline-block;margin-top:16px;padding:5px 14px;border-radius:20px;font-size:11px;letter-spacing:2px;font-weight:600}
-.status-live{border:1px solid var(--red);color:var(--red);animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-.status-warm{border:1px solid var(--gold);color:var(--gold)}
-.status-cold{border:1px solid var(--text-dim);color:var(--text-dim)}
+/* Tracker */
+.tracker{padding:110px 0;background:var(--section-stripe);border-top:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .5s}
+.tracker-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px}
+.track-card{position:relative;z-index:2;background:var(--card-bg2);border-radius:var(--radius-lg);padding:30px 26px;border:1px solid var(--border);transition:all .35s;overflow:hidden;backdrop-filter:blur(4px)}
+.track-card::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(245,166,35,0.15),transparent);transition:all .35s}
+.track-card:hover{transform:translateY(-3px);border-color:var(--border-active);box-shadow:0 14px 36px rgba(0,0,0,0.2),0 0 24px rgba(245,166,35,0.04)}
+[data-theme="light"] .track-card:hover{box-shadow:0 8px 24px rgba(0,0,0,0.08),0 0 16px rgba(196,136,29,0.08)}
+.track-card:hover::before{left:5%;right:5%;background:linear-gradient(90deg,transparent,rgba(245,166,35,0.3),transparent)}
+.track-card .track-icon{font-size:26px;margin-bottom:14px}
+.track-card .track-name{font-size:20px;font-weight:700;color:var(--text-bright);letter-spacing:4px;font-family:var(--font-heading)}
+.track-card .track-dev{font-size:11px;color:var(--text-dim);margin-top:4px;letter-spacing:2px}
+.track-card .track-info{font-size:13px;color:var(--text);margin-top:14px;line-height:1.7}
+.track-card .track-status{display:inline-block;margin-top:18px;padding:5px 16px;border-radius:20px;font-size:10px;letter-spacing:3px;font-weight:600}
+.status-live{border:1px solid rgba(233,69,96,0.5);color:var(--red);animation:statusPulse 2s ease-in-out infinite;box-shadow:0 0 16px rgba(233,69,96,0.1)}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:0.55}}
+.status-warm{border:1px solid rgba(245,166,35,0.4);color:var(--gold);box-shadow:0 0 12px rgba(245,166,35,0.06)}
+.status-cold{border:1px solid var(--border);color:var(--text-dim)}
 
-/* ===== About ===== */
-.about{padding:100px 0}
-.about-content{max-width:640px;margin:0 auto;text-align:center}
-.about-content p{font-size:17px;color:var(--text);margin-bottom:18px;letter-spacing:1px;line-height:1.8}
+/* About */
+.about{padding:110px 0}
+.about-content{max-width:600px;margin:0 auto;text-align:center;position:relative;z-index:2}
+.about-content p{font-size:16px;color:var(--text);margin-bottom:18px;letter-spacing:2px;line-height:1.9}
 .about-content .highlight{color:var(--gold);font-weight:600}
-.social-row{display:flex;justify-content:center;gap:16px;margin-top:40px;flex-wrap:wrap}
-.social-btn{
-  display:inline-flex;align-items:center;gap:8px;padding:10px 24px;
-  border:1px solid var(--border);border-radius:30px;font-size:14px;color:var(--text-dim);letter-spacing:2px;
-  transition:all .25s;background:var(--surface);
-}
-.social-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+.social-row{display:flex;justify-content:center;gap:14px;margin-top:44px;flex-wrap:wrap}
+.social-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border:1px solid var(--border);border-radius:28px;font-size:13px;color:var(--text-dim);letter-spacing:3px;transition:all .3s;background:rgba(128,128,128,0.03);backdrop-filter:blur(4px)}
+.social-btn:hover{border-color:var(--border-active);color:var(--gold);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.15),0 0 20px rgba(245,166,35,0.06)}
 
-/* ===== Footer ===== */
-footer{padding:28px 0;text-align:center;border-top:1px solid var(--border);font-size:13px;color:var(--text-dim);letter-spacing:1px}
+/* Footer */
+footer{padding:32px 0;text-align:center;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim);letter-spacing:2px;position:relative;z-index:2}
 footer span{color:var(--gold)}
+footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;color:var(--text-dim)}
+.temp-gauge .bar{width:60px;height:3px;border-radius:2px;background:rgba(128,128,128,0.15);overflow:hidden;position:relative}
+.temp-gauge .bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:60%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;animation:tempRise 4s ease-in-out infinite alternate}
+@keyframes tempRise{0%{width:40%}100%{width:85%}}
+
+/* Scroll Reveal */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease-out,transform .7s ease-out}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ----- Responsive ----- */
+@media(max-width:768px){
+  nav .inner{padding:0 14px;height:60px}
+  .logo{font-size:16px;letter-spacing:2px}
+  .nav-links{gap:16px}
+  .nav-links a{font-size:10px;letter-spacing:1px}
+  .nav-links .btn-bili{padding:4px 10px;font-size:9px}
+  .toggles{margin-left:8px;gap:4px}
+  .toggle-btn{width:28px;height:26px;font-size:11px;border-radius:13px}
+  .toggle-btn.lang-btn{width:36px;font-size:9px}
+  .hero{padding:130px 0 80px}
+  .hero h1{letter-spacing:6px}
+  .hero .tagline{font-size:14px;letter-spacing:4px}
+  .hero .stats{gap:28px;margin-top:40px}
+  .hero .stat:not(:last-child)::after{right:-14px}
+  .hero .stat-num{font-size:30px}
+  .hero .stat-label{font-size:9px;letter-spacing:3px}
+  .section-head h2{letter-spacing:3px}
+  .episodes-grid{grid-template-columns:1fr;gap:12px}
+  .tracker-grid{grid-template-columns:1fr 1fr;gap:12px}
+  .ep-card .ep-visual{height:100px;font-size:38px}
+  .container{padding:0 16px}
+  .bg-scene{display:none}
+}
+@media(max-width:480px){
+  .tracker-grid{grid-template-columns:1fr}
+  .hero .stats{gap:18px}
+  .hero .stat:not(:last-child)::after{display:none}
+  .social-row{flex-direction:column;align-items:center}
+  .nav-links{gap:10px}
+  .nav-links a{font-size:9px;letter-spacing:1px}
+}
 </style>
 </head>
 <body>
 
-<!-- Nav -->
+<!-- Background Scene -->
+<div class="bg-scene" aria-hidden="true">
+  <div class="mountains mt-far">
+    <svg viewBox="0 0 1440 360" preserveAspectRatio="none">
+      <path d="M0,360 L0,220 Q60,190 120,210 Q200,150 280,195 Q380,120 460,175 Q560,100 640,155 Q740,90 820,145 Q920,70 1000,135 Q1100,80 1180,130 Q1280,90 1370,145 Q1410,160 1440,180 L1440,360 Z" fill="var(--mt-far-fill)"/>
+      <path d="M0,360 L0,250 Q80,220 160,245 Q260,180 350,230 Q450,150 530,210 Q630,140 710,200 Q810,130 890,190 Q990,120 1080,185 Q1180,140 1260,190 Q1350,160 1440,200 L1440,360 Z" fill="var(--mt-far-fill2)"/>
+    </svg>
+  </div>
+  <div class="mountains mt-mid">
+    <svg viewBox="0 0 1440 300" preserveAspectRatio="none">
+      <path d="M0,300 L0,180 Q100,130 200,170 Q320,90 420,150 Q540,70 640,130 Q760,60 860,120 Q980,50 1080,115 Q1200,70 1300,120 Q1390,150 1440,90 L1440,300 Z" fill="var(--mt-mid-fill)"/>
+      <path d="M0,300 L0,210 Q140,170 260,210 Q380,140 500,195 Q620,120 740,180 Q860,110 980,175 Q1100,120 1220,170 Q1340,140 1440,160 L1440,300 Z" fill="var(--mt-mid-fill2)"/>
+    </svg>
+  </div>
+  <div class="mountains mt-near">
+    <svg viewBox="0 0 1440 240" preserveAspectRatio="none">
+      <path d="M0,240 L0,140 Q80,100 180,145 Q300,70 420,130 Q540,50 660,115 Q780,40 900,110 Q1020,60 1140,115 Q1260,80 1380,125 Q1410,135 1440,110 L1440,240 Z" fill="var(--mt-near-fill)"/>
+      <path d="M0,240 L0,170 Q120,130 240,175 Q360,100 480,155 Q600,80 720,140 Q840,70 960,135 Q1080,90 1200,140 Q1320,110 1440,130 L1440,240 Z" fill="var(--mt-near-fill2)"/>
+    </svg>
+  </div>
+  <div class="mist"></div>
+</div>
+
+<!-- Ink spot accents -->
+<div class="ink-accent ink-accent--gold" aria-hidden="true"></div>
+<div class="ink-accent ink-accent--red" aria-hidden="true"></div>
+
+<!-- Fireflies Canvas -->
+<canvas id="fireflies" aria-hidden="true"></canvas>
+
+<!-- ===== Navigation ===== -->
 <nav>
   <div class="inner">
     <a href="#" class="logo"><span class="dot"></span>国游温度计</a>
     <div class="nav-links">
-      <a href="#videos">往期</a>
-      <a href="#tracker">追踪</a>
-      <a href="#about">关于</a>
-      <a href="https://space.bilibili.com/3546857156380947" target="_blank" class="btn">B站主页</a>
+      <a href="#videos" data-i18n="nav.episodes">往期</a>
+      <a href="#tracker" data-i18n="nav.tracker">追踪</a>
+      <a href="#about" data-i18n="nav.about">关于</a>
+      <a href="https://space.bilibili.com/3546857156380947" target="_blank" class="btn-bili" data-i18n="nav.bilibili">B站主页</a>
+      <div class="toggles">
+        <button class="toggle-btn theme-btn" id="btn-theme" title="切换主题" aria-label="Toggle theme">🌙</button>
+        <button class="toggle-btn lang-btn" id="btn-lang" title="Switch language" aria-label="Toggle language">EN</button>
+      </div>
     </div>
   </div>
 </nav>
 
-<!-- Hero -->
+<!-- ===== Hero ===== -->
 <header class="hero">
-  <div class="thermo-icon">🌡️</div>
+  <div class="seal" data-i18n="hero.seal">国 产 3A · 观 察 者</div>
   <h1>国游<span class="accent">温度计</span></h1>
-  <p class="tagline">有温度的国产游戏观察者</p>
+  <p class="tagline" data-i18n="hero.tagline">有温度的国产游戏观察者</p>
   <div class="stats">
-    <div class="stat"><div class="stat-num">5</div><div class="stat-label">视频</div></div>
-    <div class="stat"><div class="stat-num">4</div><div class="stat-label">3A 追踪</div></div>
-    <div class="stat"><div class="stat-num">2.1万</div><div class="stat-label">最高播放</div></div>
-    <div class="stat"><div class="stat-num">B站+抖音</div><div class="stat-label">双平台</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label" data-i18n="hero.episodes">期视频</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label" data-i18n="hero.tracking">项目追踪</div></div>
+    <div class="stat"><div class="stat-num">2.1万</div><div class="stat-label" data-i18n="hero.views">最高播放</div></div>
+    <div class="stat"><div class="stat-num">B站+抖音</div><div class="stat-label" data-i18n="hero.platforms">双平台</div></div>
   </div>
 </header>
 
-<!-- Latest -->
+<!-- ===== Latest Video ===== -->
 <section class="latest">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="label">Latest</div>
-      <h2>最新<span>视频</span></h2>
-      <div class="decorator"></div>
+      <h2 data-i18n-html="latest.title">最新<span>视频</span></h2>
+      <div class="brush-divider"></div>
     </div>
-    <div class="video-wrapper">
+    <div class="video-wrapper reveal">
       <div class="video-frame">
         <iframe src="https://player.bilibili.com/player.html?bvid=BV1v3Vd6JEgw&page=1&high_quality=1" allowfullscreen loading="lazy"></iframe>
       </div>
-      <div class="video-label">第5期 · 湮灭之潮——中国人做的亚瑟王游戏，老外先疯了</div>
+      <div class="video-label" data-i18n="latest.label">第5期 · 湮灭之潮——中国人做的亚瑟王游戏，老外先疯了</div>
     </div>
   </div>
 </section>
 
-<!-- Episodes -->
+<!-- ===== Episodes ===== -->
 <section class="episodes" id="videos">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="label">Archive</div>
-      <h2>往期<span>视频</span></h2>
-      <div class="decorator"></div>
+      <h2 data-i18n-html="episodes.title">往期<span>视频</span></h2>
+      <div class="brush-divider"></div>
     </div>
     <div class="episodes-grid">
 
-      <a href="articles/ep5-湮灭之潮.html" class="ep-card">
+      <a href="articles/ep5-湮灭之潮.html" class="ep-card reveal">
         <div class="ep-visual">⚔️</div>
         <div class="ep-body">
-          <div class="ep-badge">第5期</div>
-          <div class="ep-title">湮灭之潮 · 中国人做的亚瑟王3A</div>
+          <span class="ep-badge" data-i18n="episode.ep5">第5期</span>
+          <div class="ep-title" data-i18n="episode.ep5.title">湮灭之潮 · 中国人做的亚瑟王3A</div>
           <div class="ep-meta">2026年5月 · 4分35秒</div>
-          <div class="ep-link">阅读文章 →</div>
+          <span class="ep-link" data-i18n="episode.read">阅读文章 →</span>
         </div>
       </a>
 
-      <a href="articles/ep4-归唐.html" class="ep-card">
+      <a href="articles/ep4-归唐.html" class="ep-card reveal">
         <div class="ep-visual">🏜️</div>
         <div class="ep-body">
-          <div class="ep-badge">第4期</div>
-          <div class="ep-title">归唐 · 网易憋了一年的牌</div>
+          <span class="ep-badge" data-i18n="episode.ep4">第4期</span>
+          <div class="ep-title" data-i18n="episode.ep4.title">归唐 · 网易憋了一年的牌</div>
           <div class="ep-meta">2026年5月 · 3分钟</div>
-          <div class="ep-link">阅读文章 →</div>
+          <span class="ep-link" data-i18n="episode.read">阅读文章 →</span>
         </div>
       </a>
 
-      <a href="https://www.bilibili.com/video/BV1bnVH6LEtX" target="_blank" class="ep-card">
+      <a href="https://www.bilibili.com/video/BV1bnVH6LEtX" target="_blank" class="ep-card reveal">
         <div class="ep-visual">🃏</div>
         <div class="ep-body">
-          <div class="ep-badge">第3期</div>
-          <div class="ep-title">48小时三国杀</div>
+          <span class="ep-badge" data-i18n="episode.ep3">第3期</span>
+          <div class="ep-title" data-i18n="episode.ep3.title">48小时三国杀</div>
           <div class="ep-meta">2026年5月 · 2分15秒</div>
-          <div class="ep-link">B站观看 →</div>
+          <span class="ep-link" data-i18n="episode.watch">B站观看 →</span>
         </div>
       </a>
 
-      <a href="https://www.bilibili.com/video/BV1gXG16mE9E" target="_blank" class="ep-card">
+      <a href="https://www.bilibili.com/video/BV1gXG16mE9E" target="_blank" class="ep-card reveal">
         <div class="ep-visual">🗡️</div>
         <div class="ep-body">
-          <div class="ep-badge">第2期</div>
-          <div class="ep-title">影之刃零深度前瞻</div>
+          <span class="ep-badge" data-i18n="episode.ep2">第2期</span>
+          <div class="ep-title" data-i18n="episode.ep2.title">影之刃零深度前瞻</div>
           <div class="ep-meta">2026年5月 · 10分钟</div>
-          <div class="ep-link">B站观看 →</div>
+          <span class="ep-link" data-i18n="episode.watch">B站观看 →</span>
         </div>
       </a>
 
-      <a href="https://www.bilibili.com/video/BV1qTG76yEUH" target="_blank" class="ep-card">
+      <a href="https://www.bilibili.com/video/BV1qTG76yEUH" target="_blank" class="ep-card reveal">
         <div class="ep-visual">🌏</div>
         <div class="ep-body">
-          <div class="ep-badge">第1期</div>
-          <div class="ep-title">2026国产3A全景展望</div>
+          <span class="ep-badge" data-i18n="episode.ep1">第1期</span>
+          <div class="ep-title" data-i18n="episode.ep1.title">2026国产3A全景展望</div>
           <div class="ep-meta">2026年5月 · 12分钟</div>
-          <div class="ep-link">B站观看 →</div>
+          <span class="ep-link" data-i18n="episode.watch">B站观看 →</span>
         </div>
       </a>
 
@@ -300,75 +427,342 @@ footer span{color:var(--gold)}
   </div>
 </section>
 
-<!-- Tracker -->
+<!-- ===== Tracker ===== -->
 <section class="tracker" id="tracker">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="label">Radar</div>
-      <h2>国产3A <span>项目追踪</span></h2>
-      <div class="decorator"></div>
+      <h2 data-i18n-html="tracker.title">国产3A <span>项目追踪</span></h2>
+      <div class="brush-divider"></div>
     </div>
     <div class="tracker-grid">
 
-      <div class="track-card">
+      <div class="track-card reveal">
         <div class="track-icon">🏜️</div>
         <div class="track-name">归 唐</div>
         <div class="track-dev">网易雷火 · 临安24工作室</div>
-        <div class="track-info">安史之乱后敦煌信使的归唐之路。写实搏杀，叙事动作冒险。2018年立项，UE5打造。</div>
-        <div class="track-status status-live">6月6日 SGF亮相</div>
+        <div class="track-info" data-i18n="tracker.guitang">安史之乱后敦煌信使的归唐之路。写实搏杀，叙事动作冒险。2018年立项，UE5打造。</div>
+        <span class="track-status status-live" data-i18n="tracker.guitang.status">6月6日 SGF亮相</span>
       </div>
 
-      <div class="track-card">
+      <div class="track-card reveal">
         <div class="track-icon">⚔️</div>
         <div class="track-name">湮灭之潮</div>
         <div class="track-dev">腾讯蛇夫座 · 日蚀边缘</div>
-        <div class="track-info">亚瑟王传说×伦敦废墟。骑士协同战斗，30+Boss。今夏成都线下试玩。</div>
-        <div class="track-status status-warm">夏季试玩</div>
+        <div class="track-info" data-i18n="tracker.yanmie">亚瑟王传说×伦敦废墟。骑士协同战斗，30+Boss。今夏成都线下试玩。</div>
+        <span class="track-status status-warm" data-i18n="tracker.yanmie.status">夏季试玩</span>
       </div>
 
-      <div class="track-card">
+      <div class="track-card reveal">
         <div class="track-icon">🗡️</div>
         <div class="track-name">影之刃零</div>
         <div class="track-dev">灵游坊</div>
-        <div class="track-info">暗黑武侠功夫朋克。主角生命仅剩66天。主线20-30小时。</div>
-        <div class="track-status status-live">9月9日发售</div>
+        <div class="track-info" data-i18n="tracker.yingzhiren">暗黑武侠功夫朋克。主角生命仅剩66天。主线20-30小时。</div>
+        <span class="track-status status-live" data-i18n="tracker.yingzhiren.status">9月9日发售</span>
       </div>
 
-      <div class="track-card">
+      <div class="track-card reveal">
         <div class="track-icon">🐵</div>
         <div class="track-name">黑神话悟空 DLC</div>
         <div class="track-dev">游戏科学</div>
-        <div class="track-info">本体2000万+销量。DLC暂缓，钟馗已官宣。悟空故事将以更完整形式回归。</div>
-        <div class="track-status status-cold">待公布</div>
+        <div class="track-info" data-i18n="tracker.wukong">本体2000万+销量。DLC暂缓，钟馗已官宣。悟空故事将以更完整形式回归。</div>
+        <span class="track-status status-cold" data-i18n="tracker.wukong.status">待公布</span>
       </div>
 
     </div>
   </div>
 </section>
 
-<!-- About -->
+<!-- ===== About ===== -->
 <section class="about" id="about">
   <div class="container">
-    <div class="section-head">
+    <div class="section-head reveal">
       <div class="label">About</div>
-      <h2>关于<span>国游温度计</span></h2>
-      <div class="decorator"></div>
+      <h2 data-i18n-html="about.title">关于<span>国游温度计</span></h2>
+      <div class="brush-divider"></div>
     </div>
-    <div class="about-content">
-      <p>一个<span class="highlight">有温度的国产游戏观察者</span>。</p>
-      <p>专业但不冷漠，有趣但不低俗。<br>深度解析、行业观察、不吹不黑。</p>
+    <div class="about-content reveal">
+      <p data-i18n="about.line1">一个<span class="highlight">有温度的国产游戏观察者</span></p>
+      <p data-i18n="about.line2">专业但不冷漠，有趣但不低俗。<br>深度解析、行业观察、不吹不黑。</p>
       <div class="social-row">
-        <a href="https://space.bilibili.com/3546857156380947" target="_blank" class="social-btn">📺 B站主页</a>
-        <a href="#" class="social-btn">🎵 抖音</a>
-        <a href="mailto:1852779947@qq.com" class="social-btn">✉️ 合作联系</a>
+        <a href="https://space.bilibili.com/3546857156380947" target="_blank" class="social-btn">📺 <span data-i18n="about.bilibili">B站主页</span></a>
+        <a href="#" class="social-btn">🎵 <span data-i18n="about.douyin">抖音</span></a>
+        <a href="mailto:1852779947@qq.com" class="social-btn">✉️ <span data-i18n="about.contact">合作联系</span></a>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ===== Footer ===== -->
 <footer>
-  <div class="container">&copy; 2026 <span>国游温度计</span> · guoyouwenduji.cc</div>
+  <div class="container">
+    &copy; 2026 <span>国游温度计</span> · guoyouwenduji.cc
+    <div class="temp-gauge"><span data-i18n="footer.heat">国产3A热度</span> <span class="bar"></span></div>
+  </div>
 </footer>
+
+<!-- ===== Scripts ===== -->
+<script>
+/* ═══════════════════════════════════════════
+   i18n Dictionary
+   ═══════════════════════════════════════════ */
+const I18N = {
+  zh: {
+    'nav.episodes':'往期','nav.tracker':'追踪','nav.about':'关于','nav.bilibili':'B站主页',
+    'hero.seal':'国 产 3A · 观 察 者','hero.tagline':'有温度的国产游戏观察者',
+    'hero.episodes':'期视频','hero.tracking':'项目追踪','hero.views':'最高播放','hero.platforms':'双平台',
+    'latest.title':'最新<span>视频</span>','latest.label':'第5期 · 湮灭之潮——中国人做的亚瑟王游戏，老外先疯了',
+    'episodes.title':'往期<span>视频</span>',
+    'episode.ep1':'第1期','episode.ep2':'第2期','episode.ep3':'第3期','episode.ep4':'第4期','episode.ep5':'第5期',
+    'episode.ep1.title':'2026国产3A全景展望','episode.ep2.title':'影之刃零深度前瞻',
+    'episode.ep3.title':'48小时三国杀','episode.ep4.title':'归唐 · 网易憋了一年的牌',
+    'episode.ep5.title':'湮灭之潮 · 中国人做的亚瑟王3A',
+    'episode.read':'阅读文章 →','episode.watch':'B站观看 →',
+    'tracker.title':'国产3A <span>项目追踪</span>',
+    'tracker.guitang':'安史之乱后敦煌信使的归唐之路。写实搏杀，叙事动作冒险。2018年立项，UE5打造。',
+    'tracker.guitang.status':'6月6日 SGF亮相',
+    'tracker.yanmie':'亚瑟王传说×伦敦废墟。骑士协同战斗，30+Boss。今夏成都线下试玩。',
+    'tracker.yanmie.status':'夏季试玩',
+    'tracker.yingzhiren':'暗黑武侠功夫朋克。主角生命仅剩66天。主线20-30小时。',
+    'tracker.yingzhiren.status':'9月9日发售',
+    'tracker.wukong':'本体2000万+销量。DLC暂缓，钟馗已官宣。悟空故事将以更完整形式回归。',
+    'tracker.wukong.status':'待公布',
+    'about.title':'关于<span>国游温度计</span>',
+    'about.line1':'一个<span class="highlight">有温度的国产游戏观察者</span>',
+    'about.line2':'专业但不冷漠，有趣但不低俗。<br>深度解析、行业观察、不吹不黑。',
+    'about.bilibili':'B站主页','about.douyin':'抖音','about.contact':'合作联系',
+    'footer.heat':'国产3A热度',
+    'hero.views_val':'2.1万','hero.platforms_val':'B站+抖音',
+    'ep1.meta':'2026年5月 · 12分钟','ep2.meta':'2026年5月 · 10分钟',
+    'ep3.meta':'2026年5月 · 2分15秒','ep4.meta':'2026年5月 · 3分钟','ep5.meta':'2026年5月 · 4分35秒',
+  },
+  en: {
+    'nav.episodes':'Archive','nav.tracker':'Radar','nav.about':'About','nav.bilibili':'Bilibili',
+    'hero.seal':'China AAA · Observer','hero.tagline':'Your Warm Window into Chinese AAA Games',
+    'hero.episodes':'Episodes','hero.tracking':'Tracking','hero.views':'Top Views','hero.platforms':'Platforms',
+    'latest.title':'Latest<span>Video</span>',
+    'latest.label':'EP5 · Tides of Annihilation — A Chinese Studio Made an Arthurian 3A, and the World Went Wild',
+    'episodes.title':'Episode<span>Archive</span>',
+    'episode.ep1':'EP1','episode.ep2':'EP2','episode.ep3':'EP3','episode.ep4':'EP4','episode.ep5':'EP5',
+    'episode.ep1.title':'2026 Chinese AAA Preview','episode.ep2.title':'Phantom Blade Zero Deep Dive',
+    'episode.ep3.title':'The 48-Hour Storm','episode.ep4.title':'Return to Tang — NetEase\'s Big Reveal',
+    'episode.ep5.title':'Tides of Annihilation — Arthurian 3A from China',
+    'episode.read':'Read Article →','episode.watch':'Watch on Bilibili →',
+    'tracker.title':'China AAA <span>Project Radar</span>',
+    'tracker.guitang':'A Dunhuang messenger\'s journey home after the An Lushan Rebellion. Gritty combat, narrative action-adventure. In development since 2018, built on UE5.',
+    'tracker.guitang.status':'June 6 · SGF Debut',
+    'tracker.yanmie':'Arthurian legend meets ruined London. Knight synergy combat, 30+ boss fights. Offline demo event in Chengdu this summer.',
+    'tracker.yanmie.status':'Summer Demo',
+    'tracker.yingzhiren':'Dark wuxia kung-fu punk. The hero has 66 days to live. 20-30 hour main story.',
+    'tracker.yingzhiren.status':'Sept 9 · Launch',
+    'tracker.wukong':'20M+ copies sold. DLC on hold, Zhong Kui announced. Wukong\'s story will return in a more complete form.',
+    'tracker.wukong.status':'TBA',
+    'about.title':'About<span>Guoyou Wenduji</span>',
+    'about.line1':'A<span class="highlight">warm-hearted observer of Chinese AAA games</span>',
+    'about.line2':'Professional but never cold. Entertaining but never cheap.<br>Deep analysis, honest observation, no hype no hate.',
+    'about.bilibili':'Bilibili','about.douyin':'Douyin','about.contact':'Contact',
+    'footer.heat':'China AAA Heat',
+    'hero.views_val':'21K','hero.platforms_val':'Bilibili+Douyin',
+    'ep1.meta':'May 2026 · 12 min','ep2.meta':'May 2026 · 10 min',
+    'ep3.meta':'May 2026 · 2 min','ep4.meta':'May 2026 · 3 min','ep5.meta':'May 2026 · 4 min 35 sec',
+  }
+};
+
+/* ═══════════════════════════════════════════
+   Theme & Language State
+   ═══════════════════════════════════════════ */
+let currentTheme = localStorage.getItem('guoyou-theme') || 'dark';
+let currentLang  = localStorage.getItem('guoyou-lang')  || 'zh';
+
+function applyTheme(t) {
+  currentTheme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('guoyou-theme', t);
+  const btn = document.getElementById('btn-theme');
+  if (btn) btn.innerHTML = t === 'dark' ? '🌙' : '☀️';
+  // Update firefly colors
+  if (window._updateFireflyColors) window._updateFireflyColors(t);
+}
+
+function applyLang(l) {
+  currentLang = l;
+  document.documentElement.setAttribute('data-lang', l);
+  localStorage.setItem('guoyou-lang', l);
+  const btn = document.getElementById('btn-lang');
+  if (btn) btn.textContent = l === 'zh' ? 'EN' : '中';
+
+  // Walk all [data-i18n] elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (I18N[l] && I18N[l][key]) el.textContent = I18N[l][key];
+  });
+
+  // Walk all [data-i18n-html] elements (support inner spans)
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (I18N[l] && I18N[l][key]) el.innerHTML = I18N[l][key];
+  });
+
+  // Update page title
+  const titles = {
+    zh: '国游温度计 · 有温度的国产游戏观察者',
+    en: 'Guoyou Wenduji · Your Warm Window into Chinese AAA Games'
+  };
+  document.title = titles[l] || titles.zh;
+
+  // Update meta description
+  const descs = {
+    zh: '国游温度计——专业但不冷漠、有趣但不低俗的国产游戏观察者。追踪归唐、湮灭之潮、影之刃零、黑神话悟空等国产3A项目最新动态。',
+    en: 'Guoyou Wenduji — a warm-hearted observer of Chinese AAA games. Tracking Return to Tang, Tides of Annihilation, Phantom Blade Zero, Black Myth: Wukong, and more.'
+  };
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc && descs[l]) metaDesc.setAttribute('content', descs[l]);
+
+  // Update special values (hero stats, episode metas)
+  if (l === 'en') {
+    // hero stat num that changes
+    const statNums = document.querySelectorAll('.hero .stat-num');
+    if (statNums[2]) statNums[2].textContent = '21K';
+    if (statNums[3]) statNums[3].textContent = 'Bilibili+Douyin';
+  } else {
+    const statNums = document.querySelectorAll('.hero .stat-num');
+    if (statNums[2]) statNums[2].textContent = '2.1万';
+    if (statNums[3]) statNums[3].textContent = 'B站+抖音';
+  }
+}
+
+// Toggle handlers
+document.getElementById('btn-theme').addEventListener('click', () => {
+  applyTheme(currentTheme === 'dark' ? 'light' : 'dark');
+});
+document.getElementById('btn-lang').addEventListener('click', () => {
+  applyLang(currentLang === 'zh' ? 'en' : 'zh');
+});
+
+// Init from localStorage
+applyTheme(currentTheme);
+applyLang(currentLang);
+
+/* ═══════════════════════════════════════════
+   Scroll Reveal
+   ═══════════════════════════════════════════ */
+(function(){
+  const observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+})();
+
+/* ═══════════════════════════════════════════
+   Fireflies with theme-aware colors
+   ═══════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('fireflies');
+  if (!canvas) return;
+
+  let mx = -200, my = -200;
+  document.addEventListener('mousemove', function(e){ mx = e.clientX; my = e.clientY; });
+  document.addEventListener('mouseleave', function(){ mx = -200; my = -200; });
+
+  const ctx = canvas.getContext('2d');
+  const flies = [];
+
+  const PALETTES = {
+    dark: [
+      'rgba(245,166,35,', 'rgba(255,200,70,', 'rgba(255,175,90,', 'rgba(233,69,96,',
+    ],
+    light: [
+      'rgba(180,130,50,', 'rgba(200,150,60,', 'rgba(160,110,40,', 'rgba(190,60,80,',
+    ]
+  };
+
+  let COLORS = PALETTES[currentTheme] || PALETTES.dark;
+
+  window._updateFireflyColors = function(theme) {
+    COLORS = PALETTES[theme] || PALETTES.dark;
+  };
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', function(){
+    resize();
+    for (let f of flies) {
+      if (f.x > canvas.width) f.x = canvas.width;
+      if (f.y > canvas.height) f.y = canvas.height;
+    }
+  });
+
+  if (flies.length === 0) {
+    for (let i = 0; i < 75; i++) {
+      flies.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: 0.5 + Math.random() * 2.5,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: -0.12 - Math.random() * 0.55,
+        opacity: 0.08 + Math.random() * 0.45,
+        pulse: Math.random() * Math.PI * 2,
+        pulseSpeed: 0.004 + Math.random() * 0.022,
+        ci: Math.floor(Math.random() * COLORS.length),
+      });
+    }
+  }
+
+  function animate() {
+    if (!canvas || !ctx) return;
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    for (let f of flies) {
+      const dx = mx - f.x, dy = my - f.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 180 && dist > 0) {
+        const force = (180 - dist) / 180 * 0.04;
+        f.vx += dx / dist * force;
+        f.vy += dy / dist * force;
+      }
+      f.vx *= 0.999;
+      f.vy *= 0.999;
+      const spd = Math.sqrt(f.vx * f.vx + f.vy * f.vy);
+      if (spd > 0.8) { f.vx = f.vx / spd * 0.8; f.vy = f.vy / spd * 0.8; }
+      f.x += f.vx;
+      f.y += f.vy;
+      f.pulse += f.pulseSpeed;
+      if (f.y < -30) { f.y = H + 30; f.x = Math.random() * W; f.vx = 0; f.vy = -0.3 - Math.random() * 0.4; }
+      if (f.x < -30) f.x = W + 30;
+      if (f.x > W + 30) f.x = -30;
+      if (f.y > H + 30) { f.y = -30; f.x = Math.random() * W; f.vx = 0; f.vy = -0.3 - Math.random() * 0.4; }
+
+      const alpha = Math.max(0, f.opacity * (0.45 + 0.55 * Math.sin(f.pulse)));
+      const color = (COLORS[f.ci] || COLORS[0]) + alpha.toFixed(2) + ')';
+
+      const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 4);
+      grad.addColorStop(0, color);
+      grad.addColorStop(0.4, (COLORS[f.ci] || COLORS[0]) + (alpha * 0.4).toFixed(2) + ')');
+      grad.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r * 4, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r * 0.5, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
 
 </body>
 </html>
