@@ -569,31 +569,32 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
     ty += (my - ty) * 0.08;
 
     // 3D tilt on title: rotateY from mouse X, rotateX from mouse Y (inverted)
-    const ry = tx * 14;  // ±14 degrees Y rotation
-    const rx = -ty * 10; // ±10 degrees X rotation
-    inner.style.transform = 'rotateX('+rx+'deg) rotateY('+ry+'deg)';
+    const ry = tx * 22;  // ±22 degrees Y rotation
+    const rx = -ty * 16; // ±16 degrees X rotation
+    var sz = 1 - Math.abs(tx) * 0.03 - Math.abs(ty) * 0.02;
+    inner.style.transform = 'rotateX('+rx+'deg) rotateY('+ry+'deg) scale('+sz+')';
     // Dynamic drop-shadow follows tilt direction
-    var sx = tx * 12;
-    var sy = ty * 6;
-    var blur = 10 + Math.abs(tx) * 8;
-    inner.style.filter = 'drop-shadow('+sx+'px '+sy+'px '+blur+'px rgba(0,0,0,0.4))';
+    var sx = tx * 20;
+    var sy = ty * 10;
+    var blur = 14 + Math.abs(tx) * 12;
+    inner.style.filter = 'drop-shadow('+sx+'px '+sy+'px '+blur+'px rgba(0,0,0,0.5))';
 
     // Floor shadow shifts opposite to tilt
     if (shadow){
-      shadow.style.transform = 'translateX('+(-tx*60)+'px) scaleX('+(1-Math.abs(tx)*0.3)+')';
-      shadow.style.opacity = 0.35 + Math.abs(tx) * 0.4;
+      shadow.style.transform = 'translateX('+(-tx*90)+'px) scaleX('+(1-Math.abs(tx)*0.4)+')';
+      shadow.style.opacity = 0.25 + Math.abs(tx) * 0.55;
     }
 
     // Seal follows slightly
-    if (seal) seal.style.transform = 'translateX('+(tx*12)+'px) translateY('+(ty*6)+'px)';
+    if (seal) seal.style.transform = 'translateX('+(tx*18)+'px) translateY('+(ty*10)+'px)';
 
     // Tagline follows subtly
-    if (tagline) tagline.style.transform = 'translateX('+(tx*6)+'px) translateY('+(ty*3)+'px)';
+    if (tagline) tagline.style.transform = 'translateX('+(tx*12)+'px) translateY('+(ty*6)+'px)';
 
     // Stats follow
     stats.forEach(function(s, i){
-      var factor = 0.5 + i * 0.3;
-      s.style.transform = 'translateY('+(ty*8*factor)+'px)';
+      var factor = 0.6 + i * 0.5;
+      s.style.transform = 'translateX('+(tx*6*factor)+'px) translateY('+(ty*10*factor)+'px)';
     });
 
     requestAnimationFrame(smoothFollow);
@@ -620,9 +621,9 @@ footer .temp-gauge{display:inline-flex;align-items:center;gap:8px;margin-top:12p
 
         // Mountains parallax (different speeds per layer)
         if (mountains.length >= 3){
-          mountains[0].style.transform = 'translateY('+(scrollY * 0.04)+'px)'; // far: slowest
-          mountains[1].style.transform = 'translateY('+(scrollY * 0.07)+'px)'; // mid
-          mountains[2].style.transform = 'translateY('+(scrollY * 0.11)+'px)'; // near: fastest
+          mountains[0].style.transform = 'translateY('+(scrollY * 0.08)+'px)'; // far
+          mountains[1].style.transform = 'translateY('+(scrollY * 0.14)+'px)'; // mid
+          mountains[2].style.transform = 'translateY('+(scrollY * 0.22)+'px)'; // near
         }
 
         // Hero elements fade & shift on scroll
